@@ -164,10 +164,10 @@ export function setupInteractions(scene, camera, renderer, mixers) {
   skipButton.style.animation = 'pop 1.5s ease-out, pulse 1.5s infinite 1.5s';
   hudContainer.appendChild(skipButton);
   const nextDayIcon = document.createElement('img');
-  nextDayIcon.src = '/assets/next_day.svg';
+  nextDayIcon.src = '/assets/next_day.png';
   nextDayIcon.style.position = 'absolute';
   nextDayIcon.style.width = '350px';
-  nextDayIcon.style.height = '250px';
+  // nextDayIcon.style.height = '250px';
   nextDayIcon.style.left = '50%';
   nextDayIcon.style.top = 'calc(50% - 200px)';
   nextDayIcon.style.transform = 'translate(-50%, -50%)';
@@ -179,18 +179,72 @@ export function setupInteractions(scene, camera, renderer, mixers) {
   hudContainer.appendChild(nextDayIcon);
   const styleElem = document.createElement('style');
   styleElem.innerHTML = `
-@keyframes pop {
-0% { transform: translate(-50%, -50%) scale(0.3); }
-60% { transform: translate(-50%, -50%) scale(1); }
-100% { transform: translate(-50%, -50%) scale(0.7); }
+  @keyframes pop {
+    0% { transform: translate(-50%, -50%) scale(0.3); }
+    60% { transform: translate(-50%, -50%) scale(1); }
+    100% { transform: translate(-50%, -50%) scale(0.7); }
+  }
+  @keyframes pulse {
+    0% { transform: translate(-50%, -50%) scale(0.7); }
+    50% { transform: translate(-50%, -50%) scale(1); }
+    100% { transform: translate(-50%, -50%) scale(0.7); }
+  }
+  
+  /* Мобильные стили для горизонтальной ориентации */
+  @media screen and (max-width: 1024px) and (orientation: landscape) {
+  #preloader img {
+    max-width: 50% !important;
+    max-height: 50% !important;
+  }
+
+  #preloader-percentage {
+    font-size: 24px !important;
+    bottom: 80px !important;
+  }
+
+  img[src="/assets/logo.png"] {
+    width: 180px !important;
+  }
+
+  img[src="/assets/plus.png"] {
+    width: 120px !important;
+    height: 120px !important;
+  }
+
+  img[src="/assets/skip_day.png"],
+  img[src="/assets/download.svg"] {
+    width: 200px !important;
+    height: 200px !important;
+  }
+
+  img[src="/assets/next_day.png"] {
+    width: 250 !important;
+    top: 25px !important;
+    transform: translateX(-50%) !important;
+  }
+
+  img[src="/assets/well_done.png"] {
+    width: 100 !important;
+    top: 25px !important;
+    transform: translateX(-50%) !important;
+  }
+
+  img[src="/assets/store.png"] {
+    width: 200px !important;
+  }
+
+  img[src="/assets/plant.png"] {
+    height: 100px !important;
+  }
+
+  .menu-item img {
+    width: 70px !important;
+    height: 70px !important;
+  }
 }
-@keyframes pulse {
-0% { transform: translate(-50%, -50%) scale(0.7); }
-50% { transform: translate(-50%, -50%) scale(1); }
-100% { transform: translate(-50%, -50%) scale(0.7); }
-}
-`;
-  document.head.appendChild(styleElem);
+  `;  
+document.head.appendChild(styleElem);
+
   const zoneItems = {
     zone1: [{ model: 'tomato_3', preview: '/assets/tomato.png' }, { model: 'corn_3', preview: '/assets/corn.png' }],
     zone2: [{ model: 'grape_3', preview: '/assets/grape.png' }, { model: 'strawberry_3', preview: '/assets/strawberry.png' }],
@@ -236,6 +290,7 @@ export function setupInteractions(scene, camera, renderer, mixers) {
       const angles = [225, 315];
       items.forEach((item, index) => {
         const itemContainer = document.createElement('div');
+        itemContainer.classList.add('menu-item');
         itemContainer.style.position = 'absolute';
         itemContainer.style.left = '50%';
         itemContainer.style.top = '50%';
@@ -271,7 +326,7 @@ export function setupInteractions(scene, camera, renderer, mixers) {
             if (["tomato_3", "corn_3", "grape_3", "strawberry_3"].includes(item.model)) delay = 1100;
             else if (item.model === 'cow_1' || item.model === 'sheep_1') delay = 900;
             if (item.model === 'cow_1' || item.model === 'sheep_1') {
-              nextDayIcon.src = '/assets/well_done.svg';
+              nextDayIcon.src = '/assets/well_done.png';
               nextDayIcon.style.width = '600px';
               skipButton.src = '/assets/download.svg';
               skipButton.style.width = '600px';
@@ -338,13 +393,13 @@ export function showPlusButton() {
     plusButton.style.display = 'block';
     if (!addItemLabel) {
       addItemLabel = document.createElement('img');
-      addItemLabel.src = '/assets/plant.svg';
+      addItemLabel.src = '/assets/plant.png';
       addItemLabel.style.position = 'absolute';
       addItemLabel.style.left = '50%';
       addItemLabel.style.top = '50%';
       addItemLabel.style.transform = 'translate(-50%, -50%)';
       addItemLabel.style.width = 'auto';
-      addItemLabel.style.height = '92px';
+      addItemLabel.style.height = '150px';
       addItemLabel.style.opacity = '0';
       addItemLabel.style.transition = 'opacity 0.5s ease';
       hudContainer.appendChild(addItemLabel);

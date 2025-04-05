@@ -54,9 +54,9 @@ function animateGrowth(mainObj, groundObj, offset) {
         const easeT2 = 1 - Math.pow(1 - t2, 2);
         mainObj.scale.set(easeT2, easeT2, easeT2);
 
-        // Добавим вращение только для томата и кукурузы
+        
         if (mainObj.name === "tomato_3" || mainObj.name === "corn_3") {
-          const rotationSpeed = Math.PI * 2; // один оборот
+          const rotationSpeed = Math.PI * 2; 
           mainObj.rotation.y = easeT2 * rotationSpeed;
         }
 
@@ -254,7 +254,7 @@ export function placeGridObjects(scene, zoneName, modelName, mixers) {
           clone.scale.set(0, 0, 0);
           const groundClone = groundModel.clone();
           if (modelName === "tomato_3") {
-            groundClone.scale.set(1, 1, 1.4);
+            groundClone.scale.set(1, 0.7, 1.4);
           }
           groundClone.position.set(posX, posY, posZ);
           groundClone.castShadow = true;
