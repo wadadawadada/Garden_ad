@@ -224,7 +224,7 @@ export function setupInteractions(scene, camera, renderer, mixers) {
   }
 
   img[src="/assets/well_done.png"] {
-    width: 100 !important;
+    width: 50% !important;
     top: 25px !important;
     transform: translateX(-50%) !important;
   }
