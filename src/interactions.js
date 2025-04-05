@@ -272,7 +272,9 @@ export function setupInteractions(scene, camera, renderer, mixers) {
             else if (item.model === 'cow_1' || item.model === 'sheep_1') delay = 900;
             if (item.model === 'cow_1' || item.model === 'sheep_1') {
               nextDayIcon.src = '/assets/well_done.svg';
+              nextDayIcon.style.width = '600px';
               skipButton.src = '/assets/download.svg';
+              skipButton.style.width = '600px';
               skipButton.style.animation = 'pop 0.5s ease-out';
               setTimeout(() => {
                 transitionToNight(1500);
@@ -342,7 +344,7 @@ export function showPlusButton() {
       addItemLabel.style.top = '50%';
       addItemLabel.style.transform = 'translate(-50%, -50%)';
       addItemLabel.style.width = 'auto';
-      addItemLabel.style.height = '72px';
+      addItemLabel.style.height = '92px';
       addItemLabel.style.opacity = '0';
       addItemLabel.style.transition = 'opacity 0.5s ease';
       hudContainer.appendChild(addItemLabel);
