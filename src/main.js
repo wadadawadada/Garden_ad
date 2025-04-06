@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { loadGround } from './scene.js';
-import { addBackgroundMusic, playSound } from './sounds.js';
-import { setupInteractions, showPlusButton } from './interactions.js';
+import { loadGround } from './sceneLoader.js';
+import { addBackgroundMusic } from './sounds.js';
+import { setupInteractions } from './interactions.js';
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x87ceeb);
@@ -28,7 +28,6 @@ renderer.outputColorSpace = THREE.SRGBColorSpace;
 document.body.appendChild(renderer.domElement);
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enabled = false;
-
 controls.target.set(0.4, 8, -5);
 controls.enableDamping = true;
 controls.dampingFactor = 0.25;
@@ -59,7 +58,21 @@ scene.add(shadowPlane);
 const mixers = [];
 loadGround(scene, mixers);
 addBackgroundMusic(camera, scene);
-setupInteractions(scene, camera, renderer, mixers);
+
+function getZoneCenter(zoneName) {
+  let zone = null;
+  scene.traverse(child => { if (child.name === zoneName) zone = child; });
+  if (zone) {
+    zone.updateWorldMatrix(true, true);
+    const bbox = new THREE.Box3().setFromObject(zone);
+    const center = new THREE.Vector3();
+    bbox.getCenter(center);
+    return center;
+  }
+  return new THREE.Vector3();
+}
+
+setupInteractions(scene, camera, renderer, mixers, getZoneCenter);
 
 window.addEventListener('resize', onWindowResize, false);
 function onWindowResize() {
@@ -99,7 +112,6 @@ function animateStartup(duration, callback) {
 }
 
 window.addEventListener("preloaderDone", () => {
-  // Добавляем логотип в левый верхний угол только после исчезновения прелоадера.
   const appLogo = document.createElement('img');
   appLogo.src = '/assets/logo.png';
   appLogo.style.position = 'absolute';
@@ -109,7 +121,7 @@ window.addEventListener("preloaderDone", () => {
   appLogo.style.zIndex = '10000';
   document.body.appendChild(appLogo);
   animateStartup(2000, () => {
-    showPlusButton();
+    window.showPlusButton();
   });
 });
 

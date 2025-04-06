@@ -28,7 +28,6 @@ export function addBackgroundMusic(camera, scene) {
   const sound = new THREE.Audio(listener);
   const audioLoader = new THREE.AudioLoader();
   
-  // Если window.__ASSETS__ существует (т.е. финальная сборка single/index.html), используем base64
   const useBase64 = typeof window !== 'undefined' && window.__ASSETS__ && window.__ASSETS__['theme.mp3'];
   const source = useBase64 ? window.__ASSETS__['theme.mp3'] : AUDIO_DEPENDENCIES['theme.mp3'];
   

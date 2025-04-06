@@ -22,7 +22,7 @@ module.exports = {
         exclude: /node_modules/,
         use: 'babel-loader'
       },
-      // Для mp3 используем asset/inline, чтобы получить base64 строку
+  
       {
         test: /\.mp3$/,
         type: 'asset/inline'
