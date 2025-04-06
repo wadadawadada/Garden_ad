@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { clone as SkeletonClone } from 'three/examples/jsm/utils/SkeletonUtils.js';
 
 export function loadGround(scene, mixers) {
   const loader = new GLTFLoader();
@@ -55,7 +56,7 @@ export function loadGround(scene, mixers) {
               posCandidate = new THREE.Vector2(posX, posZ);
             } while (placedChickens.some(existing => existing.distanceTo(posCandidate) < 1));
             placedChickens.push(posCandidate);
-            const clone = chicken.clone();
+            const clone = SkeletonClone(chicken);
             const baseY = bbox.min.y + 0.5;
             const offset = -0.5;
             const posY = baseY + offset;
